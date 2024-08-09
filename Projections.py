@@ -33,7 +33,7 @@ class Projections:
         initial_service_sales = self._file.get_service_sales_value()
         return self.generate_sales_projections(initial_service_sales, 0.05)
 
-    def generate_combined_projections(self) -> List[Dict[str, str]]:
+    def generate_combined_projections(self) -> pd.DataFrame:
         product_sales_projections = self.generate_product_sales_projections()
         service_sales_projections = self.generate_service_sales_projections()
 
@@ -41,10 +41,14 @@ class Projections:
         for product, service in zip(product_sales_projections, service_sales_projections):
             total_sales = float(product['sales']) + float(service['sales'])
             combined_projections.append({
-                'date': product['date'],
-                'product_sales': product['sales'],
-                'service_sales': service['sales'],
-                'total_sales': f'{total_sales:.2f}'
+                'Date': product['date'],
+                'Product Sales': product['sales'],
+                'Service Sales': service['sales'],
+                'Total Sales': f'{total_sales:.2f}',
+                'Cost of Good Sold': f'{total_sales * 0.3:.2f}'
             })
 
-        return combined_projections
+        return pd.DataFrame(combined_projections)
+
+    def get_projections(self) -> pd.DataFrame:
+        return self.generate_combined_projections()

@@ -6,7 +6,5 @@ file.read_file()
 
 projections = Projections(file)
 
-combined_projections = projections.generate_combined_projections()
-
-for projection in combined_projections:
-    print(projection)
+projections = projections.get_projections()
+print(projections)
