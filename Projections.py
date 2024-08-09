@@ -1,7 +1,7 @@
 import File
 import pandas as pd
 from typing import List, Dict
-from datetime import  timedelta
+from datetime import timedelta
 
 
 class Projections:
@@ -19,8 +19,8 @@ class Projections:
             date = start_date + timedelta(days=30 * i)
             current_sales *= (1 + growth_rate)
             projections.append({
-                'date': date.strftime('%Y-%m-%d %H:%M:%S'),
-                'sales': f'{current_sales:.2f}'
+                'date': date.strftime('%B %Y'),
+                'sales': f'{current_sales:,.2f}'
             })
 
         return projections
@@ -39,13 +39,21 @@ class Projections:
 
         combined_projections = []
         for product, service in zip(product_sales_projections, service_sales_projections):
-            total_sales = float(product['sales']) + float(service['sales'])
+            total_sales = float(product['sales'].replace(',', '')) + float(service['sales'].replace(',', ''))
+            cost_of_goods_sold = float(product['sales'].replace(',', '')) * 0.75
+            staff_salaries = total_sales * 0.20
+            total_operation_expense = cost_of_goods_sold + self._file.get_marketing_value() + staff_salaries
+
             combined_projections.append({
                 'Date': product['date'],
                 'Product Sales': product['sales'],
                 'Service Sales': service['sales'],
-                'Total Sales': f'{total_sales:.2f}',
-                'Cost of Good Sold': f'{total_sales * 0.3:.2f}'
+                'Total Sales': f'{total_sales:,.2f}',
+                'Cost of Good Sold': f'{cost_of_goods_sold:,.2f}',
+                'Marketing:': f'{self._file.get_marketing_value():,.2f}',
+                'Staff Salaries': f'{staff_salaries:,.2f}',
+                'Total Operating Expenses': f'{total_operation_expense:,.2f}',
+                'Net Income': f'{total_sales - total_operation_expense:,.2f}'
             })
 
         return pd.DataFrame(combined_projections)
