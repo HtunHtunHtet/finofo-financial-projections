@@ -15,7 +15,7 @@
 2. The file has two sheets, `Sheet1` and `Sheet2`.
 3. `Sheet1` contains data that is pre-populated from the start.
 4. `Sheet2` only includes historical data, which is July 2024.
-5. The reason for `Sheet2` is to prove that if we change the sheet when we read the file, it will calculate accordingly.
+5. The reason for `Sheet2` is to prove that the algo will calculate accordingly, without projections data. 
 6. The format should be the same as the original file provided by the interviewer (i.e., `financial_projections.xlsx`).
 
 ## Analysis
