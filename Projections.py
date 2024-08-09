@@ -33,16 +33,23 @@ class Projections:
         initial_service_sales = self._file.get_service_sales_value()
         return self.generate_sales_projections(initial_service_sales, 0.05)
 
+    def get_marketing_value(self, month: int) -> float:
+        base_marketing_value = self._file.get_marketing_value()
+        if month > 6:
+            return base_marketing_value * 2
+        return base_marketing_value
+
     def generate_combined_projections(self) -> pd.DataFrame:
         product_sales_projections = self.generate_product_sales_projections()
         service_sales_projections = self.generate_service_sales_projections()
 
         combined_projections = []
-        for product, service in zip(product_sales_projections, service_sales_projections):
+        for month, (product, service) in enumerate(zip(product_sales_projections, service_sales_projections), start=1):
             total_sales = float(product['sales'].replace(',', '')) + float(service['sales'].replace(',', ''))
             cost_of_goods_sold = float(product['sales'].replace(',', '')) * 0.75
             staff_salaries = total_sales * 0.20
-            total_operation_expense = cost_of_goods_sold + self._file.get_marketing_value() + staff_salaries
+            marketing = self.get_marketing_value(month)
+            total_operation_expense = cost_of_goods_sold + marketing + staff_salaries
 
             combined_projections.append({
                 'Date': product['date'],
@@ -50,7 +57,7 @@ class Projections:
                 'Service Sales': service['sales'],
                 'Total Sales': f'{total_sales:,.2f}',
                 'Cost of Good Sold': f'{cost_of_goods_sold:,.2f}',
-                'Marketing:': f'{self._file.get_marketing_value():,.2f}',
+                'Marketing:': f'{marketing:,.2f}',
                 'Staff Salaries': f'{staff_salaries:,.2f}',
                 'Total Operating Expenses': f'{total_operation_expense:,.2f}',
                 'Net Income': f'{total_sales - total_operation_expense:,.2f}'
