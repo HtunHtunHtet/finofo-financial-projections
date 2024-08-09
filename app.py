@@ -1,7 +1,7 @@
 from File import File
 from Projections import Projections
 
-file = File('financial_projections.xlsx', 'Sheet1')
+file = File('financial_projections.xlsx', 'Sheet2')
 file.read_file()
 
 projections = Projections(file)
