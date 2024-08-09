@@ -70,20 +70,20 @@ class Projections:
         formatted_output = ""
         for _, row in df.iterrows():
             formatted_output += f"\n{row['Date']}\n\n"
-            formatted_output += f"Product Sales   ${row['Product Sales']}\n"
-            formatted_output += f"Service Sales   ${row['Service Sales']}\n"
+            formatted_output += f"Product Sales:   ${row['Product Sales']}\n"
+            formatted_output += f"Service Sales:   ${row['Service Sales']}\n"
             formatted_output += "-------------------------------\n"
-            formatted_output += f"Total Sales   ${row['Service Sales']}\n"
+            formatted_output += f"Total Sales:   ${row['Service Sales']}\n"
 
             formatted_output += "\n"
-            formatted_output += f"Cost of Good Sold   ${row['Cost of Good Sold']}\n"
-            formatted_output += f"Marketing  ${row['Marketing']}\n"
-            formatted_output += f"Staff Salaries  ${row['Staff Salaries']}\n"
+            formatted_output += f"Cost of Good Sold:   ${row['Cost of Good Sold']}\n"
+            formatted_output += f"Marketing:  ${row['Marketing']}\n"
+            formatted_output += f"Staff Salaries:  ${row['Staff Salaries']}\n"
             formatted_output += "-------------------------------\n"
-            formatted_output += f"Total Operating Expenses  ${row['Total Operating Expenses']}\n"
+            formatted_output += f"Total Operating Expenses:  ${row['Total Operating Expenses']}\n"
 
             formatted_output += "\n"
-            formatted_output += f"Net Income  ${row['Net Income']}\n"
+            formatted_output += f"Net Income:  ${row['Net Income']}\n"
             formatted_output += "=================================\n"
 
         return formatted_output
