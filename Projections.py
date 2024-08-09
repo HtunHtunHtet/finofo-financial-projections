@@ -10,7 +10,7 @@ class Projections:
 
     def generate_sales_projections(self, initial_sales: float, growth_rate: float) -> List[Dict[str, str]]:
         historical_date = self._file.historical_date()
-        start_date = pd.to_datetime(historical_date)
+        start_date = pd.to_datetime(historical_date) + timedelta(days=30)
 
         projections = []
         current_sales = initial_sales
@@ -73,7 +73,7 @@ class Projections:
             formatted_output += f"Product Sales:   ${row['Product Sales']}\n"
             formatted_output += f"Service Sales:   ${row['Service Sales']}\n"
             formatted_output += "-------------------------------\n"
-            formatted_output += f"Total Sales:   ${row['Service Sales']}\n"
+            formatted_output += f"Total Sales:   ${row['Total Sales']}\n"
 
             formatted_output += "\n"
             formatted_output += f"Cost of Good Sold:   ${row['Cost of Good Sold']}\n"
